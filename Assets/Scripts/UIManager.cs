@@ -14,12 +14,18 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private CanvasGroup pageOne;
     [SerializeField] private CanvasGroup pageTwo;
     [SerializeField] private CanvasGroup pageThree;
+    [SerializeField] private CanvasGroup youWin;
 
     [Header("Buttons")] 
     
     [SerializeField] private Button previous;
     [SerializeField] private Button next;
     [SerializeField] private Button start;
+
+    protected override void Awake()
+    {
+        start.enabled = true;
+    }
 
     public void TurnNextPage()
     {
@@ -46,6 +52,23 @@ public class UIManager : Singleton<UIManager>
         intro.DOFade(0, 0.5f);
         GameManager.Instance.player.GetComponentInChildren<PlayerMovement>().movementEnabled = true;
         
+        //Start music
+        GameManager.Instance.player.GetComponentInChildren<PlayerMovement>().StartBackgroundMusic();
+    }
+
+    public void GameOver()
+    {
+        //Disable buttons
+        previous.gameObject.SetActive(false);
+        next.gameObject.SetActive(false);
+        start.gameObject.SetActive(false);
+        
+        youWin.DOFade(1, 0.5f);
+        GameManager.Instance.player.GetComponentInChildren<PlayerMovement>().movementEnabled = false;
+        GameManager.Instance.player.GetComponentInChildren<PlayerMovement>().StartEndingMusic();
+        
+        
+
         //Start music
         GameManager.Instance.player.GetComponentInChildren<PlayerMovement>().StartBackgroundMusic();
     }

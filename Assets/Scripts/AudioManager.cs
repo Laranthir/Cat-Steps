@@ -6,7 +6,7 @@ public class AudioManager : Singleton<AudioManager>
 {
     public Sound[] sounds;
 
-    private void Awake()
+    protected override void Awake()
     {
         foreach (var sound in sounds)
         {

@@ -55,4 +55,9 @@ public class GameManager : Singleton<GameManager>
             obstacle.ResetPosition();
         }
     }
+    
+    public void CheckpointUpdate(int roomNumber)
+    {
+        checkpoint = roomNumber;
+    }
 }

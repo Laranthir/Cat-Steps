@@ -2,9 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class Obstacle : MonoBehaviour
 {
+    public int revertToPreviousCheckpoint;
+    
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     private Rigidbody rb;
@@ -64,8 +67,11 @@ public class Obstacle : MonoBehaviour
         gameManager.player.GetComponentInChildren<PlayerMovement>().movementEnabled = false;
         gameManager.player.GetComponentInChildren<Rigidbody>().velocity = Vector3.zero;
         gameManager.player.GetComponentInChildren<Rigidbody>().angularVelocity = Vector3.zero;
-        
+
         yield return new WaitForSeconds(gameManager.WaitBeforeRestart);
+        UpdateCheckpoint(); //Incase an obstacle falls during transition.
+        
+
         if (gameManager.checkpoint == 1)
         {
             gameManager.player.position = gameManager.firstSpawnPoint.position;
@@ -92,5 +98,10 @@ public class Obstacle : MonoBehaviour
         gameManager.player.GetChild(0).transform.localRotation = new Quaternion(0, 0, 0,1);
         gameManager.player.GetChild(0).GetComponent<Rigidbody>().velocity = Vector3.zero;
         gameManager.player.GetChild(0).GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+    }
+    
+    public void UpdateCheckpoint()
+    {
+        gameManager.CheckpointUpdate(revertToPreviousCheckpoint);
     }
 }

@@ -47,6 +47,15 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
+        if (horizontal > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (horizontal < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+
     }
 
     private void Move()
@@ -182,6 +191,7 @@ public class PlayerMovement : MonoBehaviour
             transform.DOMove(new Vector3(-29f, 0.5f, -22.5f), gameManager.levelTransitionDuration / 2);
             yield return new WaitForSeconds(gameManager.levelTransitionDuration / 2);
             movementEnabled = true;
+            GameManager.Instance.checkpoint += 1;
         }
         else if (doorNumber == 2)
         {
@@ -192,11 +202,18 @@ public class PlayerMovement : MonoBehaviour
             transform.DOMove(new Vector3(-80f, 0.5f, -22.5f), gameManager.levelTransitionDuration/2);
             yield return new WaitForSeconds(gameManager.levelTransitionDuration / 2);
             movementEnabled = true;
+            GameManager.Instance.checkpoint += 1;
         }
     }
 
     public void StartBackgroundMusic()
     {
         AudioManager.Instance.Play("Music");
+    }
+
+    public void StartEndingMusic()
+    {
+        Destroy(GetComponent<AudioSource>()); //remove the background music
+        AudioManager.Instance.Play("Ending Music");
     }
 }

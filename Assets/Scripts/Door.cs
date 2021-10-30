@@ -11,10 +11,18 @@ public class Door : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && !levelPassed)
         {
-            Debug.Log("Player entered the trigger");
-            other.gameObject.GetComponentInChildren<PlayerMovement>().StartLevelTransition(doorNumber);
+            other.gameObject.GetComponentInParent<PlayerMovement>().StartLevelTransition(doorNumber);
+            StartCoroutine(CheckIfLevelPassed());
+        }
+    }
+    
+    public IEnumerator CheckIfLevelPassed()
+    {
+        yield return new WaitForSeconds(GameManager.Instance.WaitBeforeRestart);
+        
+        if (GameManager.Instance.checkpoint > doorNumber)
+        {
             levelPassed = true;
-            GameManager.Instance.checkpoint += 1;
         }
     }
 }
