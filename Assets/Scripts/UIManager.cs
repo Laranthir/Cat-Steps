@@ -22,11 +22,6 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private Button next;
     [SerializeField] private Button start;
 
-    protected override void Awake()
-    {
-        start.enabled = true;
-    }
-
     public void TurnNextPage()
     {
         currentPage++;
@@ -66,11 +61,6 @@ public class UIManager : Singleton<UIManager>
         youWin.DOFade(1, 0.5f);
         GameManager.Instance.player.GetComponentInChildren<PlayerMovement>().movementEnabled = false;
         GameManager.Instance.player.GetComponentInChildren<PlayerMovement>().StartEndingMusic();
-        
-        
-
-        //Start music
-        GameManager.Instance.player.GetComponentInChildren<PlayerMovement>().StartBackgroundMusic();
     }
 
     private void RefreshPage()

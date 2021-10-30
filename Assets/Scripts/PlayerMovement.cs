@@ -213,7 +213,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void StartEndingMusic()
     {
-        Destroy(GetComponent<AudioSource>()); //remove the background music
+        Destroy(GetComponent<AudioSource>()); //Remove player music
         AudioManager.Instance.Play("Ending Music");
     }
 }
